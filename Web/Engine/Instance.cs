@@ -264,8 +264,12 @@ namespace GitDeployHub.Web.Engine
             return smokeTest;
         }
 
-        public void ExecuteProcess(string command, string arguments, ILog log, bool echo = true)
-        {
+        public void ExecuteProcess(string command, string arguments, ILog log, bool echo = true) {
+            if (Directory.Exists("C:\\Program Files\\Git\\bin\\"))
+                command = "C:\\Program Files\\Git\\bin\\" + command;
+            else {
+                command = "C:\\Program Files (x86)\\Git\\bin\\" + command;
+            }
             if (echo)
             {
                 log.Log(string.Format(" & {0} {1}", command, arguments ?? ""));
