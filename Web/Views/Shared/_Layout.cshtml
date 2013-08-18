@@ -5,10 +5,21 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href='@Url.Content("~/Content/Site.css")' type="text/css" rel="stylesheet"/>
+    <link href='@Url.Content("~/Content/modalPopLite.css")' type="text/css" rel="stylesheet"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type='text/javascript' src='@Url.Content("~/Scripts/modalPopLite.min.js")'></script>
 </head>
-<body>
-    <h1>@ViewBag.Title</h1>
-    @RenderBody()
-    @RenderSection("scripts", required: false)
-</body>
+    <body>
+        <div id="popup-wrapper" style="background-color: #ccc;">
+            <div class="popContentWrap">
+            <div id="popUpContent"></div>
+                <a id="close-btn" href="#">Close</a>
+                </div>
+        </div>
+        <div class="site">
+            <h1>@ViewBag.Title</h1>
+            @RenderBody()
+            @RenderSection("scripts", required: false)
+        </div>
+    </body>
 </html>

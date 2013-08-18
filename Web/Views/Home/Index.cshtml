@@ -4,7 +4,6 @@
 @{
     ViewBag.Title = "Git Deploy Hub";
 }
-
 <div>
     @if (Model.Queue.Count > 0)
     {
@@ -28,17 +27,22 @@
                         <td>@process.Status</td>
                         <td>@process.Started.ToString("s") (@DateTimeFormatter.TimeAgo(process.Started))</td>
                         <td>
-                            <ul>
-                                @foreach (var param in process.Parameters)
-                                {
-                                    <li>
-                                        <pre>@param.Key: @param.Value</pre>
-                                    </li>
-                                }
-                            </ul>
+                            <a href="#" class="opnPop">Show</a>
+                            <div class="popData">
+                                <ul>
+                                    @foreach (var param in process.Parameters)
+                                    {
+                                        <li>
+                                            <pre>@param.Key: @param.Value</pre>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
                         </td>
-                        <td>
-                            <pre>@process.FullLog</pre>
+                        <td><a href="#" class="opnPop">@GitDeployHub.Web.StringExt.Truncate(process.FullLog, 20)</a>
+                            <div class="popData">
+                                <pre>@process.FullLog</pre>
+                            </div>
                         </td>
                     </tr>
                 }
@@ -84,12 +88,15 @@
                                 }
                                 else
                                 {
-                                    <pre>@string.Join("\n", instance.FilesChangedToTreeish)</pre>
+                                    <a href="#" class="opnPop">@GitDeployHub.Web.StringExt.Truncate(string.Join("\n", instance.FilesChangedToTreeish), 20)</a>
+                                    <div class="popData">
+                                        <pre>@string.Join("\n", instance.FilesChangedToTreeish)</pre>
+                                    </div>
                                 }
                             </div>
                         </td>
                         <td>
-                            @Html.ActionLink("ChangeLog", "ChangeLog", "Instance", new { id = instance.Name }, new { title = "ChangeLog of currently deployed version"})
+                            @Html.ActionLink("ChangeLog", "ChangeLog", "Instance", new { id = instance.Name }, new { title = "ChangeLog of currently deployed version" })
                         </td>
                         <td>
                             <form method="POST" action="@Url.Action("Start", "Deployment", new { id = instance.Name, source = "dashboard", dry = true })">
@@ -100,46 +107,56 @@
                             </form>
                             @if (instance.HasSmokeTest && !(instance.LastDeployment != null && !instance.LastDeployment.Succeeded))
                             {
-                            <form method="POST" action="@Url.Action("SmokeTest", "Deployment", new { id = instance.Name, source = "dashboard" })">
-                                <input type="submit" value="Smoke Test" />
-                            </form>
+                                <form method="POST" action="@Url.Action("SmokeTest", "Deployment", new { id = instance.Name, source = "dashboard" })">
+                                    <input type="submit" value="Smoke Test" />
+                                </form>
                             }
                         </td>
-                    <td>
-                        <ul class="instance-tags">
-                            @foreach (var tag in instance.Tags)
-                            {
-                                <li>@tag</li>
-                            }
-                        </ul>
-                    </td>
-                    @{
-                        var lastProcess = instance.LastSmokeTest != null && (instance.LastDeployment == null || instance.LastDeployment.Succeeded) ? instance.LastSmokeTest : (BaseProcess)instance.LastDeployment;
-                    }
-                    @if (lastProcess != null)
+                        <td>
+                            <ul class="instance-tags">
+                                @foreach (var tag in instance.Tags)
+                                {
+                                    <li>@tag</li>
+                                }
+                            </ul>
+                        </td>
+                        @{
+                                var lastProcess = instance.LastSmokeTest != null && (instance.LastDeployment == null || instance.LastDeployment.Succeeded) ? instance.LastSmokeTest : (BaseProcess)instance.LastDeployment;
+                        }
+                        @if (lastProcess != null)
                         {
                             <td>@lastProcess.Completed.ToString("s")  (@DateTimeFormatter.TimeAgo(lastProcess.Completed))</td>
                             <td>
-                                <ul>
-                                    @foreach (var param in lastProcess.Parameters)
-                                    {
-                                        <li>
-                                            <pre>@param.Key: @param.Value</pre>
-                                        </li>
-                                    }
-                                </ul>
+                                <a href="#" class="opnPop">show</a>
+                                <div class="popData">
+                                    <ul>
+                                        @foreach (var param in lastProcess.Parameters)
+                                        {
+                                            <li>
+                                                <pre>@param.Key: @param.Value</pre>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
                             </td>
                             <td>
                                 <pre>@((lastProcess.Succeeded ? "OK" : "ERROR: " + lastProcess.Exception.Message) + (lastProcess is SmokeTest ? "\n(smoke tested)" : ""))</pre>
                             </td>
                             <td>
-                                <pre>@lastProcess.FullLog</pre>
+                                <a href="#" class="opnPop">@GitDeployHub.Web.StringExt.Truncate(lastProcess.FullLog, 20)</a>
+                                <div class="popData">
+                                    <pre>@lastProcess.FullLog</pre>
+                                </div>
+
                             </td>
                         }
                         else
                         {
                             <td colspan="2">No recent deployments</td>
-                            <td colspan="3">Http POST to:<pre>@Url.Action("Start", "Deployment", new { id = instance.Name, source = "sourceName" }, "http")</pre>
+                            <td colspan="3">Http POST to: <a href="#" class="opnPop">@GitDeployHub.Web.StringExt.Truncate(Url.Action("Start", "Deployment", new { id = instance.Name, source = "sourceName" }, "http"), 20)</a>
+                                <div class="popData">
+                                    <pre>@Url.Action("Start", "Deployment", new { id = instance.Name, source = "sourceName" }, "http")</pre>
+                                </div>
                             </td>
                         }
                     </tr>
@@ -175,74 +192,47 @@
                         <td>@process.Status</td>
                         <td>@process.Completed.ToString("s") (@DateTimeFormatter.TimeAgo(process.Completed))</td>
                         <td>
-                            <ul>
-                                @foreach (var param in process.Parameters)
-                                {
-                                    <li>
-                                        <pre>@param.Key: @param.Value</pre>
-                                    </li>
-                                }
-                            </ul>
+                            <a href="#" class="opnPop">show</a>
+                            <div class="popData">
+                                <ul>
+                                    @foreach (var param in process.Parameters)
+                                    {
+                                        <li>
+                                            <pre>@param.Key: @param.Value</pre>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
                         </td>
                         <td>
                             <pre>@(process.Succeeded ? "OK" : "ERROR: " + process.Exception.Message)</pre>
                         </td>
                         <td>
-                            <pre>@process.FullLog</pre>
+                            <a href="#" class="opnPop">@GitDeployHub.Web.StringExt.Truncate(process.FullLog, 20)</a>
+                            <div class="popData">
+                                <pre>@process.FullLog</pre>
+                            </div>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
     }
-    <br />
-    <br />
-    <hr />
-    <br />
-    <h2>Instructions</h2>
-    <div class="instructions">
-
-        <div>
-            1. Clone your website:
-        <pre><code>
-    cd c:\InetPub\wwwrooot
-    git clone &lt;url&gt; MyWebSite
-</code></pre>
-            (and publish it on IIS)
-        </div>
-        <div>
-            2. On your web.config:
-        <pre><code>
-    &lt;!-- allow deployments to be requested from localhost, and from github webhook servers --&gt;
-    &lt;gitDeployHub allowedAddresses="192.168.*.*;127.0.0.1;::1; 207.97.227.253, 50.57.128.197, 108.171.174.178, 50.57.231.61, 54.235.183.49, 54.235.183.23, 54.235.118.251, 54.235.120.57, 54.235.120.61, 54.235.120.62"&gt;
-        &lt;instances&gt;
-            &lt;!-- folder is optional if location is ~\..\..\&lt;name&gt; --&gt;
-            &lt;instance name="MyWebsite" folder="c:\InetPub\wwwroot\Path\To\MyWebsite" treeish="tagOrBranchNameToCheckout" /&gt;
-            &lt;instance name="AnotherWebsite" /&gt;
-        &lt;/instances&gt;
-    &lt;/gitDeployHub&gt;
-</code></pre>
-        </div>
-        <div>
-            3. Setup your hook to send an http POST to:<br />
-            <pre>
-    /api/deployments/instance-name?source=source-name
-</pre>
-            For example, if you want to pull from a github repo go to Settings / Service Hooks / WebHook URLs,<br />
-            and add:
-            <pre>
-    @Url.Action("Start", "Deployment", new { id = "MyWebsite", source = "github" }, "http")
-</pre>
-            (you can use query parameters to keep track of the request source)
-        </div>
-        <div>
-            4. Ready! (Push and refresh this page until see the deployment)
-        </div>
-    </div>
 
     <script>
         setTimeout(function () {
             document.location = document.location.href;
-        }, 30000);
+        }, 300000);
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#popup-wrapper').modalPopLite({ openButton: '.opnPop', closeButton: '#close-btn' });
+            $(".opnPop").bind("click", function () {
+                $("#popUpContent").html($(this).parent().children(".popData").html());
+                $(this).parent().children(".popData").hide();
+                $('#popup-wrapper').show();
+            });
+
+        });
     </script>
 </div>
