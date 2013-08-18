@@ -2,7 +2,7 @@
 @model Hub
 
 @{
-    ViewBag.Title = "Git Deploy Hub";
+    ViewBag.Title = "CV+AR - Git Deploy";
 }
 <div>
     @if (Model.Queue.Count > 0)
@@ -25,7 +25,7 @@
                     <tr class="@(process.Succeeded ? "succeeded" : "failed")">
                         <td>@process.Instance.Name</td>
                         <td>@process.Status</td>
-                        <td>@process.Started.ToString("s") (@DateTimeFormatter.TimeAgo(process.Started))</td>
+                        <td>@process.Started.ToString("s")<br/>(@DateTimeFormatter.TimeAgo(process.Started))</td>
                         <td>
                             <a href="#" class="opnPop">Show</a>
                             <div class="popData">
@@ -51,7 +51,7 @@
     }
 
 
-    <h2>Instances</h2>
+    <h2>Production instances</h2>
     @if (!Model.Instances.Any())
     {
         <div>Empty</div>
@@ -125,7 +125,7 @@
                         }
                         @if (lastProcess != null)
                         {
-                            <td>@lastProcess.Completed.ToString("s")  (@DateTimeFormatter.TimeAgo(lastProcess.Completed))</td>
+                            <td>@lastProcess.Completed.ToString("s")<br/>(@DateTimeFormatter.TimeAgo(lastProcess.Completed))</td>
                             <td>
                                 <a href="#" class="opnPop">show</a>
                                 <div class="popData">
@@ -165,7 +165,7 @@
         </table>
     }
 
-    <h2>History</h2>
+    <h2>Deploy History</h2>
     @if (Model.ProcessHistory.Count == 0)
     {
         <div>Empty</div>
@@ -187,10 +187,11 @@
             <tbody>
                 @foreach (var process in Model.ProcessHistory.Reverse())
                 {
-                    <tr class="@(process.Succeeded ? "succeeded" : "failed")">
+                    string p;
+                    <tr class="@(process.Succeeded ? "succeeded" : "failed") @(process.Parameters.TryGetValue("dry", out p)?"dry":null)">
                         <td>@process.Instance.Name</td>
                         <td>@process.Status</td>
-                        <td>@process.Completed.ToString("s") (@DateTimeFormatter.TimeAgo(process.Completed))</td>
+                        <td>@process.Completed.ToString("s")<br/>(@DateTimeFormatter.TimeAgo(process.Completed))</td>
                         <td>
                             <a href="#" class="opnPop">show</a>
                             <div class="popData">

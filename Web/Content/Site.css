@@ -1,14 +1,154 @@
-﻿body {
-    font-size: .85em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+﻿html, body
+{
+    font-family: Helvetica, Verdana, Sans-Serif;
+    width: 100%;
+    height: 100%;
     color: #232323;
     background-color: #fff;
+    font-size: 14px;
+}
+html, body, ul, ol, dl, li, dt, dd, p, blockquote, fieldset, legend, img, form, h1, h2, h3, h4, h5, h6
+{
+    margin: 0;
+    padding: 0;
+}
+ul, ol, li, dl, dt, dd
+{
+    list-style: none;
+}
+blockquote, fieldset, legend, img, form
+{
+    border: 0;
 }
 
 header, footer, nav, section {
     display: block;
 }
 
+p
+{
+    margin: 0 0 12px;
+}
+a
+{
+    color: /*mc*/#4490dd;
+}
+
+ a:hover
+{
+    text-decoration: none;
+}
+
+  table
+{
+    border-collapse: collapse;
+    margin-bottom: .7em;
+}
+ table.nowidth
+{
+    border-collapse: collapse;
+    margin-bottom: .7em;
+}
+
+tr:nth-child(even) {
+    background-color: #eee;
+}
+tr.failed {
+    background-color: #e88;
+}
+tr.dry {
+    background-color: #FFFFCC;
+}
+
+ table td, table th
+{
+    vertical-align: top;
+    text-align: left;
+    max-width: 200px;
+    max-height: 100px;
+    margin: 0;
+    overflow: hidden;
+    padding: 4px;
+    border: none;
+}
+ table p,  li p,  dl p
+{
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+ table tbody tr td,  table tbody tr th
+{
+    border-bottom: 1px solid #d9d9d9;
+}
+ table td,  table th
+{
+    padding: 5px 10px;
+}
+ table thead tr th
+{
+    border-bottom: 1px solid #d9d9d9;
+    color: /*mc*/#4490dd;
+    cursor: default;
+    font-size: 1.2em;
+    vertical-align: bottom;
+    padding: 8px;
+    background: white;
+}
+ table tbody .side-th
+{
+    background: #e6e6e6;
+}
+ table tbody .side-ti
+{
+    background: #f3f3f3;
+}
+ table tbody .width14
+{
+    width: 14%;
+}
+ table tbody .vac.side-ti
+{
+    background-repeat: repeat-y;
+    background-position: 0 0;
+}
+ table tbody tr:hover td
+{
+    background: #E4F2D9;
+    cursor: hand;
+}
+ table tbody td.second
+{
+    background: #dededc;
+}
+ table tfoot
+{
+    background: #dededc;
+}
+ table td.center,  table th.center
+{
+    text-align: center;
+}
+ table tr td.vac,  table tr th.vac
+{
+    vertical-align: middle;
+}
+ table td.imp,  table th.imp
+{
+    font-size: 1.3em;
+}
+ table.narrow
+{
+    width: 270px;
+}
+ table.narrow-table td
+{
+    padding: 5px 6px;
+}
+ table .noborder
+{
+    border: 0;
+}
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
@@ -60,16 +200,6 @@ textarea {
     display: none;
 }
 
-
-td {
-    max-width: 200px;
-    max-height: 100px;
-    margin: 0;
-    overflow: hidden;
-    padding: 4px;
-    border: none;
-}
-
 pre {
     white-space: pre;           /* CSS 2.0 */
 	white-space: pre-wrap;      /* CSS 2.1 */
@@ -84,17 +214,9 @@ pre {
     max-height: 400px;
 }
 
-tr:nth-child(even) {
-    background-color: #eee;
-}
-
 .instance-tags {
     font-size: large;
     font-weight: bold;    
-}
-
-tr.failed {
-    background-color: #e88;
 }
 
 .instructions div {
