@@ -4,6 +4,12 @@
 @{
     ViewBag.Title = "CV+AR - Git Deploy";
 }
+ <div id="popup-wrapper" style="background-color: #ccc;">
+            <div class="popContentWrap">
+            <div id="popUpContent"></div>
+                <a id="close-btn" href="#">Close</a>
+                </div>
+</div>
 <div>
     @if (Model.Queue.Count > 0)
     {
@@ -153,7 +159,7 @@
                         else
                         {
                             <td colspan="2">No recent deployments</td>
-                            <td colspan="3">Http POST to: <a href="#" class="opnPop">@GitDeployHub.Web.StringExt.Truncate(Url.Action("Start", "Deployment", new { id = instance.Name, source = "sourceName" }, "http"), 20)</a>
+                            <td colspan="3"><a href="#" class="opnPop">Show POST link</a>
                                 <div class="popData">
                                     <pre>@Url.Action("Start", "Deployment", new { id = instance.Name, source = "sourceName" }, "http")</pre>
                                 </div>

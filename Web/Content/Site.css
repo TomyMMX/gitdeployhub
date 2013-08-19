@@ -38,7 +38,9 @@ a
 {
     text-decoration: none;
 }
-
+.site {
+    margin: 20px;    
+}
   table
 {
     border-collapse: collapse;

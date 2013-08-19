@@ -12,8 +12,9 @@ Web.*.config
 [Rr]elease/
 x64/
 build/
-# [Bb]in/ # include binaries for this project
+#[Bb]in/ # include binaries for this project
 [Oo]bj/
+Web.dll
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
